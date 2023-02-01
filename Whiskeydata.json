@@ -1,0 +1,40 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/fuyuGT/CS7450-data/main/whiskeys.csv"
+  },
+  "vconcat": [
+    {
+      "title": {"text": "Whiskey: Age vs. Rating", "anchor": "middle"},
+      "params": [{"name": "brush", "select": "interval"}],
+      "width": 1000,
+      "height": 500,
+      "mark": {"type": "point", "tooltip": true},
+      "encoding": {
+        "x": {"field": "Age", "type": "quantitative", "title": "Age (Years)"},
+        "y": {"field": "Rating", "type": "quantitative", "title": "Rating"},
+        "color": {"field": "Category", "title": "Category"}
+      }
+    },
+    {
+      "transform": [{"filter": {"param": "brush"}}],
+      "title": {"text": "Whiskey: ABV and Price", "anchor": "middle"},
+      "repeat": ["ABV", "Price"],
+      "spec": {
+        "width": 500,
+        "height": 400,
+        "mark": "bar",
+        "encoding": {
+          "y": {
+            "bin": {"maxbins": 10},
+            "field": {"repeat": "repeat"},
+            "type": "quantitative"
+          },
+          "x": {"aggregate": "count"},
+          "tooltip": {"aggregate": "count", "type": "quantitative"}
+        }
+      }
+    }
+  ],
+  "config": {}
+}
